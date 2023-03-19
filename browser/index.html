@@ -1,0 +1,300 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ukr">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Розпізнавання тексту</title>-->
+<!--  <script src="../node_modules/tesseract.js/dist/tesseract.min.js"></script>-->
+<!--  <link rel="stylesheet" type="text/css" href="style.css">-->
+<!--  <script src="script.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div id="output"></div>-->
+<!--<input type="file" id="file" name="file">-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--  <title>Convert Image To Text Using JS</title>-->
+<!--  <link rel="stylesheet" href="style.css">-->
+<!--&lt;!&ndash;   <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.min.js" defer></script>&ndash;&gt;-->
+<!--  <script src="script.js" defer></script>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<div class="app">-->
+<!--  <header>-->
+<!--    <h1>Convert image to Editable Text</h1>-->
+<!--  </header>-->
+<!--  <main>-->
+<!--    <section class="upload-file flex-between">-->
+<!--      <p class="tooltip" title="Enter URL of image.">-->
+<!--        <img src="images/search.png" alt="">-->
+<!--      </p>-->
+<!--      <input type="text" placeholder="Enter URL of image" id="img-url">-->
+<!--      <label>-->
+<!--        <p class="tooltip" title="Select any file.">-->
+<!--          <img src="images/upload.png" alt="">-->
+<!--        </p>-->
+<!--        <input type="file" hidden id="upload-file-btn">-->
+<!--      </label>-->
+<!--    </section>-->
+<!--    <section class="result flex-between">-->
+<!--      <img src="images/upload.png" alt="" id="img-result">-->
+<!--      <img src="images/arrow-right.png" alt="" class="arrow">-->
+<!--      <div>-->
+<!--        <p class="tooltip" title="Copy text." id="copy-text">-->
+<!--          <img src="images/copy.png" alt="">-->
+<!--        </p>-->
+<!--        <textarea id="converted-text" placeholder="Converted text of image"></textarea>-->
+<!--      </div>-->
+<!--    </section>-->
+<!--  </main>-->
+<!--</div>-->
+
+<!--</body>-->
+
+<!--</html>-->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tesseract.js приклад</title>
+  <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #image-container {
+      max-width: 500px;
+      max-height: 500px;
+    }
+  </style>
+</head>
+<body>
+<!--<h1>Tesseract.js приклад</h1>-->
+<!--<input type="file" id="file-input">-->
+<!--<label for="lang-select">Мова:</label>-->
+<!--<select id="lang-select">-->
+<!--  <option value="ukr+eng">Українська</option>-->
+<!--  <option value="eng">Англійська</option>-->
+<!--  <option value="rus">Російська</option>-->
+<!--  &lt;!&ndash; Додайте інші мови, які підтримуються Tesseract.js &ndash;&gt;-->
+<!--</select>-->
+<!--<button id="recognize-button">Розпізнати текст</button>-->
+<!--<div id="image-container"></div>-->
+<!--<div id="result" style="white-space:pre"></div>-->
+
+<form>
+  <label for="file-input">Виберіть зображення:</label>
+  <input type="file" id="file-input">
+
+  <label for="url-input">Вставте URL зображення:</label>
+  <input type="text" id="url-input">
+  <button type="button" id="load-from-url-btn">Завантажити зображення з URL</button>
+
+  <label for="lang-select">Мова:</label>
+  <select id="lang-select">
+    <option value="ukr">Українська</option>
+    <option value="eng">Англійська</option>
+    <option value="rus">Російська</option>
+    <option value="tha">thaaaaaaaa</option>
+    <!-- Додайте інші мови, які підтримуються Tesseract.js -->
+  </select>
+
+  <button type="button" id="recognize-btn">Розпізнати текст</button>
+</form>
+
+<div id="image-preview"></div>
+<div id="result"></div>
+
+
+
+
+
+
+
+
+<!--<form>-->
+<!--  <label for="file-input">Виберіть зображення:</label>-->
+<!--  <input type="file" id="file-input">-->
+
+<!--  <label for="lang-select">Мова:</label>-->
+<!--  <select id="lang-select">-->
+<!--    <option></option>-->
+<!--    <option value="ukr">Українська</option>-->
+<!--    <option value="eng">Англійська</option>-->
+<!--    <option value="rus">Російська</option>-->
+<!--    &lt;!&ndash; Додайте інші мови, які підтримуються Tesseract.js &ndash;&gt;-->
+<!--  </select>-->
+
+<!--  <button type="button" id="recognize-btn">Розпізнати текст</button>-->
+<!--</form>-->
+
+<!--<div id="image-preview"></div>-->
+<!--<div id="result" style="white-space:pre"></div>-->
+
+
+
+
+
+
+<!--<script>-->
+<!--  // var file;-->
+<!--  // $('#file-input').on('change', function() {-->
+<!--  //   file = this.files[0];-->
+<!--  //   var reader = new FileReader();-->
+<!--  //   reader.onload = function(event) {-->
+<!--  //     $('#image-container').html('<img src="' + event.target.result + '">');-->
+<!--  //   }-->
+<!--  //   reader.readAsDataURL(file);-->
+<!--  // });-->
+<!--  // $('#lang-select').on('change', function() {-->
+<!--  //   var lang = $(this).val();-->
+<!--  //   Tesseract.recognize(file, { lang: lang }).then(function(result) {-->
+<!--  //     // Обробити результати розпізнавання тексту-->
+<!--  //   });-->
+<!--  // });-->
+<!--  // $('#recognize-button').on('click', function() {-->
+<!--  //   Tesseract.recognize(file, { lang: 'osd' })-->
+<!--  //           .progress(function(message) {-->
+<!--  //             console.log(message);-->
+<!--  //           })-->
+<!--  //           .catch(function(error) {-->
+<!--  //             console.error(error);-->
+<!--  //           })-->
+<!--  //           .then(function(result) {-->
+<!--  //             $('#result').text(result.text);-->
+<!--  //           });-->
+<!--  // });-->
+<!--  var fileInput = document.getElementById('file-input');-->
+<!--  var langSelect = document.getElementById('lang-select');-->
+<!--  var recognizeBtn = document.getElementById('recognize-btn');-->
+<!--  var imagePreview = document.getElementById('image-preview');-->
+<!--  var resultDiv = document.getElementById('result');-->
+
+<!--  var selectedFile, selectedLang;-->
+
+<!--  fileInput.addEventListener('change', function(e) {-->
+<!--    selectedFile = e.target.files[0];-->
+<!--    var reader = new FileReader();-->
+<!--    reader.onload = function(event) {-->
+<!--      var img = document.createElement('img');-->
+<!--      img.src = event.target.result;-->
+<!--      imagePreview.innerHTML = '';-->
+<!--      imagePreview.appendChild(img);-->
+<!--    };-->
+<!--    reader.readAsDataURL(selectedFile);-->
+<!--  });-->
+
+<!--  langSelect.addEventListener('change', function(e) {-->
+<!--    selectedLang = e.target.value;-->
+<!--  });-->
+
+<!--  recognizeBtn.addEventListener('click', function() {-->
+<!--    if (!selectedFile) {-->
+<!--      alert('Будь ласка, виберіть зображення');-->
+<!--      return;-->
+<!--    }-->
+<!--    if (!selectedLang) {-->
+<!--      alert('Будь ласка, виберіть мову');-->
+<!--      return;-->
+<!--    }-->
+<!--    Tesseract.recognize(selectedFile, { lang: selectedLang })-->
+<!--            .progress(function(message) {-->
+<!--              console.log(message);-->
+<!--            })-->
+<!--            .catch(function(error) {-->
+<!--              console.error(error);-->
+<!--            })-->
+<!--            .then(function(result) {-->
+<!--              resultDiv.textContent = result.text;-->
+<!--            });-->
+<!--  });-->
+<!--</script>-->
+<script>
+  var fileInput = document.getElementById('file-input');
+  var urlInput = document.getElementById('url-input');
+  var loadFromUrlBtn = document.getElementById('load-from-url-btn');
+  var langSelect = document.getElementById('lang-select');
+  var recognizeBtn = document.getElementById('recognize-btn');
+  var imagePreview = document.getElementById('image-preview');
+  var resultDiv = document.getElementById('result');
+
+  var selectedFile, selectedLang;
+
+  fileInput.addEventListener('change', function(e) {
+    selectedFile = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      var img = document.createElement('img');
+      img.src = event.target.result;
+      imagePreview.innerHTML = '';
+      imagePreview.appendChild(img);
+    };
+    reader.readAsDataURL(selectedFile);
+  });
+
+  urlInput.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.code === 'KeyV') {
+      e.preventDefault();
+      var clipboardData = e.clip
+      var items = clipboardData.items;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          var blob = items[i].getAsFile();
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            var img = document.createElement('img');
+            img.src = event.target.result;
+            imagePreview.innerHTML = '';
+            imagePreview.appendChild(img);
+          };
+          reader.readAsDataURL(blob);
+        }
+      }
+    } });
+  loadFromUrlBtn.addEventListener('click', function() {
+    var imageUrl = urlInput.value;
+    if (!imageUrl) { return; }
+    var img = document.createElement('img');
+    img.src = imageUrl;
+    imagePreview.innerHTML = '';
+    imagePreview.appendChild(img); });
+  langSelect.addEventListener('change', function() {
+    selectedLang = langSelect.value;
+  });
+  recognizeBtn.addEventListener('click', function() {
+    if (!selectedFile && !imagePreview.querySelector('img')) { return; }
+    var imgElement = selectedFile ?
+            document.createElement('img') : imagePreview.querySelector('img');
+    var lang = selectedLang || 'ukr';
+    if (selectedFile) {
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        imgElement.src = event.target.result;
+        recognizeText(imgElement, lang); };
+      reader.readAsDataURL(selectedFile);
+    }
+    else { recognizeText(imgElement, lang);
+    }
+  });
+  function recognizeText(imgElement, lang) {
+    Tesseract.recognize( imgElement, lang, {
+      logger: m => console.log(m)
+    } ).then(function(result) {
+      resultDiv.innerText = result.text;
+    });
+  }
+
+</script>
+</body>
+</html>
